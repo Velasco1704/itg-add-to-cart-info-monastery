@@ -79,7 +79,7 @@ El código consta de tres componentes principales: `ProductGroup`, `ButtonGroup`
 
 El componente `ProductGroup` es un componente que muestra un grupo de productos. Este componente se utiliza en el componente `AddToCartInfo` para mostrar la información de los productos agregados al carrito.
 
-```jsx
+```tsx
 const ProductGroup = ({ products, locale }: Props) => {
   const CSS__HANDLES = [
     'product',
@@ -113,7 +113,7 @@ const ProductGroup = ({ products, locale }: Props) => {
 
 El componente `Totalizers` es un componente que muestra los totalizers que provienen del useOrderForm. Este componente se utiliza en el componente `AddToCartInfo` para mostrar el total de productos en el carrito y el precio total.
 
-```jsx
+```tsx
 const Totalizers = ({ totalizers, locale }: Props) => {
   const CSS__HANDLES = [
     'totalizers',
@@ -140,7 +140,7 @@ const Totalizers = ({ totalizers, locale }: Props) => {
 
 El componente `ButtonGroup` es un componente que muestra un grupo de botones relacionados. Este componente se utiliza en el componente `AddToCartInfo` para mostrar los botones de finalizar compra y continuar comprando.
 
-```jsx
+```tsx
 const ButtonGroup = () => {
   const CSS__HANDLES = [
     'button-group',

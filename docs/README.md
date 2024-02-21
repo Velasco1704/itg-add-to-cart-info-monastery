@@ -1,114 +1,167 @@
-📢 Use this project, [contribute](https://github.com/{OrganizationName}/{AppName}) to it or open issues to help evolve it using [Store Discussion](https://github.com/vtex-apps/store-discussion).
+# Add to cart info 
 
-# APP NAME
+Este componente se encarga de hacer una previsualización del carrito de compras
 
-<!-- DOCS-IGNORE:start -->
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-<!-- DOCS-IGNORE:end -->
+## Instalación
 
-Under the app's name, you should explain the topic, giving a **brief description** of its **functionality** in a store when installed.
+### 1. Clonar repositorio
 
-Next, **add media** (either an image of a GIF) with the rendered components, so that users can better understand how the app works in practice. 
+Copia el [repositorio](https://github.com/Velasco1704/itg-add-to-cart-info-monastery/) del proyecto y clonarlo en tu terminal.
 
-![Media Placeholder](https://user-images.githubusercontent.com/52087100/71204177-42ca4f80-227e-11ea-89e6-e92e65370c69.png)
+```bash
+git clone https://github.com/Velasco1704/itg-add-to-cart-info-monastery/
+```
 
-## Configuration 
+### 2. Acceder a la Carpeta del Proyecto
 
-In this section, you first must **add the primary instructions** that will allow users to use the app's blocks in their store, such as:
+Después de clonar el repositorio, entra a la carpeta del proyecto utilizando el siguiente comando:
 
-1. Adding the app as a theme dependency in the `manifest.json` file;
-2. Declaring the app's main block in a given theme template or inside another block from the theme.
+```bash
+cd itg-add-to-cart-info-monastery
+```
 
-Remember to add a table with all blocks exported by the app and their descriptions. You can verify an example of it on the [Search Result documentation](https://vtex.io/docs/components/all/vtex.search-result@3.56.1/). 
+### 3. Instalar dependencias de la carpeta react
 
-Next, add the **props table** containing your block's props. 
+Entra a la carpeta de react y instala las dependencias.
 
-If the app exports more than one block, create several tables - one for each block. For example:
+```bash
+cd react && yarn
+```
 
-### `block-1` props
+> [!NOTE]
+> No uses npm y yarn al mismo tiempo esto va a causar conflictos
 
-| Prop name    | Type            | Description    | Default value                                                                                                                               |
-| ------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | 
-| `XXXXX`      | `XXXXXX`       | XXXXXXXX         | `XXXXXX`        |
+### 4. Iniciar Sesión en VTEX
 
+Para poder trabajar con VTEX, necesitas iniciar sesión con tu cuenta. Utiliza el siguiente comando y reemplaza {account} con tu nombre de cuenta de VTEX:
 
-### `block-2` props
+```bash
+vtex login { account }
+```
 
-| Prop name    | Type            | Description    | Default value                                                                                                                               |
-| ------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | 
-| `XXXXX`      | `XXXXXX`       | XXXXXXXX         | `XXXXXX`        |
+### 5. Seleccionar el Espacio de Trabajo
 
-Prop types are: 
+Una vez que hayas iniciado sesión, selecciona el espacio de trabajo en el que deseas trabajar utilizando el siguiente comando. Reemplaza {workspace} con el nombre de tu espacio de trabajo:
 
-- `string` 
-- `enum` 
-- `number` 
-- `boolean` 
-- `object` 
-- `array` 
+```bash
+vtex use { workspace }
+```
 
-When documenting a prop whose type is `object` or `array` another prop table will be needed. You can create it following the example below:
+### 6. Enlazar el Proyecto al Espacio de Trabajo
 
-- `propName` object:
+Finalmente, enlaza el proyecto a tu espacio de trabajo para visualizarlo ejecutando el siguiente comando:
 
-| Prop name    | Type            | Description    | Default value                                                                                                                               |
-| ------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | 
-| `XXXXX`      | `XXXXXX`       | XXXXXXXX         | `XXXXXX`        |
+```bash
+vtex link
+```
 
+### 7. Agrega el componente
 
-Remember to also use this Configuration section to  **showcase any necessary disclaimer** related to the app and its blocks, such as the different behavior it may display during its configuration. 
+Agrega el componente en el `manifest.json` de tu **store theme**
 
-## Modus Operandi *(not mandatory)*
+```JSON
+"dependencies": {
+   "{accountName}.{appName}": "{appVersion}",
+    "vtex.store": "2.x",
+    "vtex.store-header": "2.x"
+}
+```
 
-There are scenarios in which an app can behave differently in a store, according to how it was added to the catalog, for example. It's crucial to go through these **behavioral changes** in this section, allowing users to fully understand the **practical application** of the app in their store.
+## Descripción general del proyecto y su uso
 
-If you feel compelled to give further details about the app, such as it's **relationship with the VTEX admin**, don't hesitate to use this section. 
+El componente `AddToCartInfo` es un componente diseñado para mostrar previsualización de la información del carrito de compras. Este componente es parte de una interfaz de usuario que ayuda a los clientes a visualizar los productos que han agregado al carrito, el costo total y proporciona botones para acciones adicionales como finalizar la compra o continuar comprando.
 
-## Customization
+## Componentes
 
-The first thing that should be present in this section is the sentence below, showing users the recipe pertaining to CSS customization in apps:
+El código consta de tres componentes principales: `ProductGroup`, `ButtonGroup` y `Totalizers`.
 
-`In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).`
+### ProductGroup
 
-Thereafter, you should add a single column table with the available CSS handles for the app, like the one below. Note that the Handles must be ordered alphabetically.
+El componente `ProductGroup` es un componente que muestra un grupo de productos. Este componente se utiliza en el componente `AddToCartInfo` para mostrar la información de los productos agregados al carrito.
 
-| CSS Handles |
-| ----------- | 
-| `XXXXX` | 
-| `XXXXX` | 
-| `XXXXX` | 
-| `XXXXX` | 
-| `XXXXX` |
+```jsx
+const ProductGroup = ({ products, locale }: Props) => {
+  const CSS__HANDLES = [
+    'product',
+    'product__image--container',
+    'product__image',
+    'product__info--container',
+    'product__info--text',
+    'product__info--span'
+  ];
+  const handles = useCssHandles(CSS__HANDLES);
 
+  return (
+    <>
+      {products.map((product, index: number) => (
+        <div className={handles['product']} key={index}>
+          <div className={handles['product__image--container']}>
+            <img className={handles['product__image']} src={product.imageUrls.at1x} alt={product.skuName} />
+          </div>
+          <div className={handles['product__info--container']}>
+            <p className={handles['product__info--text']}>{product.skuName} <span className={handles['product__info--span']}>(X {product.quantity})</span></p>
+            <p className={handles['product__info--text']}>${!locale ? `${product.price / 100}` : (product.price / 100).toLocaleString(locale)}</p>
+          </div>
+        </div>
+      ))}
+    </>
+  );
+};
+```
 
-If there are none, add the following sentence instead:
+### Totalizers
 
-`No CSS Handles are available yet for the app customization.`
+El componente `Totalizers` es un componente que muestra los totalizers que provienen del useOrderForm. Este componente se utiliza en el componente `AddToCartInfo` para mostrar el total de productos en el carrito y el precio total.
 
-<!-- DOCS-IGNORE:start -->
+```jsx
+const Totalizers = ({ totalizers, locale }: Props) => {
+  const CSS__HANDLES = [
+    'totalizers',
+    'totalizers__total',
+    'totalizers__total--text',
+    'totalizers--text'
+  ];
+  const handles = useCssHandles(CSS__HANDLES);
+  const totalPrice = !totalizers.length ? 0 : (totalizers[0].value / 100).toLocaleString(locale);
 
-## Contributors ✨
+  return (
+    <div className={handles['totalizers']}>
+      <p className={handles['totalizers--text']}>Tienes {totalizers.length} productos en tu carrito</p>
+      <div className={handles['totalizers__total']}>
+        <p className={handles['totalizers__total--text']}>Total:</p>
+        <p className={handles['totalizers__total--text']}>${totalPrice}</p>
+      </div>
+    </div>
+  );
+};
+```
 
-Thanks goes to these wonderful people:
+#### ButtonGroup
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<!-- markdownlint-enable -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+El componente `ButtonGroup` es un componente que muestra un grupo de botones relacionados. Este componente se utiliza en el componente `AddToCartInfo` para mostrar los botones de finalizar compra y continuar comprando.
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
+```jsx
+const ButtonGroup = () => {
+  const CSS__HANDLES = [
+    'button-group',
+    'button-group__checkout',
+    'button-group__checkout--link',
+    'button-group__cart',
+    'button-group__cart--button',
+    'button-group__cart--link',
+  ];
+  const handles = useCssHandles(CSS__HANDLES);
 
-<!-- DOCS-IGNORE:end -->
-
----- 
-
-Check out some documentation models that are already live: 
-- [Breadcrumb](https://github.com/vtex-apps/breadcrumb)
-- [Image](https://vtex.io/docs/components/general/vtex.store-components/image)
-- [Condition Layout](https://vtex.io/docs/components/all/vtex.condition-layout@1.1.6/)
-- [Add To Cart Button](https://vtex.io/docs/components/content-blocks/vtex.add-to-cart-button@0.9.0/)
-- [Store Form](https://vtex.io/docs/components/all/vtex.store-form@0.3.4/)
+  return (
+    <div className={handles['button-group']}>
+      <div className={handles['button-group__checkout']}>
+        <a className={handles['button-group__checkout--link']} href="https://danielvelasco--itglobers.myvtex.com/checkout/#/cart">FINALIZAR COMPRA</a>
+      </div>
+      <div className={handles['button-group__cart']}>
+        <button className={handles['button-group__cart--button']}>CONTINUAR COMPRANDO</button>
+        <a className={handles['button-group__cart--link']} href="">VER CARRITO</a>
+      </div>
+    </div>
+  );
+};
+```
